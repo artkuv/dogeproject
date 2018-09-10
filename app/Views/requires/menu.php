@@ -1,7 +1,7 @@
 <div class="header py-4">
     <div class="container">
         <div class="d-flex">
-            <a class="header-brand" href="#">
+            <a class="header-brand" href="/profile/<?= $profile['name'] ?>">
                 <span class="fa fa-twitter"></span>
                 <img src="#" class="header-brand-img" alt="MyTwitter">
             </a>

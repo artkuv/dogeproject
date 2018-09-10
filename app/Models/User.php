@@ -78,6 +78,14 @@ class User extends Model
         return ($stmt->fetchColumn() > 0) ? true : false;
     }
 
+    public static function idExist(int $id): bool
+    {
+        $stmt = static::db()->prepare('SELECT COUNT(*) FROM users WHERE id = :id');
+        $stmt->execute([':id' => $id]);
+
+        return ($stmt->fetchColumn() > 0) ? true : false;
+    }
+
     public static function create(array $params): bool
     {
         $sql = 'INSERT INTO users (email, name, password, ip, registered, last_login)

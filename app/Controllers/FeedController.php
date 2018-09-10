@@ -18,11 +18,20 @@ class FeedController extends Controller
             Controller::redirect("/login");
         }
     }
-    
+
+    public function globalFeed()
+    {
+        $profile = User::getById($_SESSION['id']);
+        $tweets = Tweets::getAll();
+
+        return View::render('Feed', ['profile' => $profile, 'tweets' => $tweets]);
+    }
+
     public function feed()
     {
         $profile = User::getById($_SESSION['id']);
+        $tweets = Tweets::getFollowsTweets($_SESSION['id']);
 
-        return View::render('feed', ['profile' => $profile]);
+        return View::render('feed', ['profile' => $profile, 'tweets' => $tweets]);
     }
 }

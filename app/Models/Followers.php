@@ -22,4 +22,36 @@ class Followers extends Model
 
         return $stmt->fetchColumn();
     }
+
+    public static function Follow(int $user_id, int $follow): bool
+    {
+        $stmt = static::db()->prepare('INSERT INTO followers SET user_id = :user_id, follows_user_id = :follow');
+
+        return $stmt->execute([
+            ':user_id' => $user_id,
+            ':follow' => $follow
+        ]);
+    }
+
+    public static function unFollow(int $user_id, int $follow): bool
+    {
+        $stmt = static::db()->prepare('DELETE FROM followers WHERE user_id = :user_id AND follows_user_id = :follow');
+
+        return $stmt->execute([
+            ':user_id' => $user_id,
+            ':follow' => $follow
+        ]);
+    }
+
+    public static function isFollow(int $user_id, int $follow): bool
+    {
+        $stmt = static::db()->prepare('SELECT COUNT(*) FROM followers WHERE user_id = :user_id AND follows_user_id = :follow');
+
+        $stmt->execute([
+            ':user_id' => $user_id,
+            ':follow' => $follow
+        ]);
+
+        return ($stmt->fetchColumn() > 0) ? true : false;
+    }
 }

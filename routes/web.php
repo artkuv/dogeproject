@@ -6,7 +6,8 @@
 use Framework\Router;
 
 Router::group(['namespace' => 'App\Controllers'], function () {
-    Router::get('/', 'FeedController@feed');
+    Router::get('/', 'FeedController@globalFeed');
+    Router::get('/feed', 'FeedController@feed');
     Router::get('/registration', 'RegistrationController@registration');
     Router::post('/registration/save', 'RegistrationController@save');
     Router::get('/login', 'LoginController@login');

@@ -21,9 +21,21 @@ require_once 'requires/searchbar.php';
 										<?= ucfirst($getProfile['about']) ?>
 									</p>
 								<? if($_SESSION['id'] !== $getProfile['id']): ?>
-									<button class="btn btn-outline-primary btn-sm">
-										<span class="fa fa-twitter"></span> Follow
-									</button>
+											<form action="/profile/<?= $getProfile['name'] ?>" method="post">
+									<? if($isFollow === false): ?>
+										
+											<input type="hidden" name="followId" value="<?= $getProfile['id']?>">
+											<button class="btn btn-outline-primary btn-sm">
+												<span class="fa fa-twitter"></span> Follow
+											</button>
+										
+									<? else: ?>
+											<input type="hidden" name="unFollowId" value="<?= $getProfile['id']?>">
+											<button class="btn btn-outline-primary btn-sm">
+												<span class="fa fa-twitter" style="color: red;"></span> unFollow
+											</button>
+									<? endif; ?>
+											</form>
 								<? else: ?>
 									It's me :)
 								<? endif; ?>
