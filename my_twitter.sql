@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Час створення: Сер 31 2018 р., 15:36
+-- Час створення: Вер 04 2018 р., 09:24
 -- Версія сервера: 5.7.20
 -- Версія PHP: 7.2.0
 
@@ -56,7 +56,7 @@ CREATE TABLE `tweets` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` char(32) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   `about` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL,

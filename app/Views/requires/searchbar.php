@@ -12,10 +12,10 @@
             <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     <li class="nav-item">
-                        <a href="./profile.html" class="nav-link"><i class="fe fe-home"></i> My page</a>
+                        <a href="/profile/<?= htmlspecialchars($_SESSION['name']) ?>" class="nav-link"><i class="fe fe-home"></i> My page</a>
                     </li>
                     <li class="nav-item">
-                        <a href="./feed.html" class="nav-link active"><i class="fe fe-file"></i>Tweets feed</a>
+                        <a href="/" class="nav-link"><i class="fe fe-file"></i>Tweets feed</a>
                     </li>
                 </ul>
             </div>
