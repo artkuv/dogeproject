@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Framework\Controller;
 use Framework\View;
 use Framework\Model;
 use App\Models\User;
@@ -9,13 +10,13 @@ use App\Models\Tweets;
 /**
  *
  */
-class ProfileController
+
+class ProfileController extends Controller
 {
-    public function __construct()
+    public function before()
     {
         if (User::isAuth() === false) {
-            header("Location: /login");
-            die();
+            Controller::redirect("/login");
         }
     }
 
@@ -23,12 +24,12 @@ class ProfileController
     {
 
         $pathinfo = pathinfo($_SERVER['REQUEST_URI']);
-        $profilName = $pathinfo['filename'];
+        $getProfilName = $pathinfo['filename'];
 
-        if (User::nameExist($profilName) === true) {
-            $profile = User::getByName($profilName);
+        if (User::nameExist($getProfilName) === true) {
+            $getProfile = User::getByName($getProfilName);
         } else {
-            header("Location: /");
+            Controller::redirect("/");
         }
 
         $message = (isset($_POST['message'])) ? $_POST['message'] : '';
@@ -36,9 +37,19 @@ class ProfileController
             Tweets::addTweet(array('user_id' => $_SESSION['id'], 'content' => $message));
         }
 
-        $tweets = Tweets::getAllFromUser($profile['id']);
+        $profile = User::getById($_SESSION['id']);
         
-        return View::render('profile',['profile' => $profile, 'tweets' => $tweets]);
+        $tweets = Tweets::getAllFromUser($getProfile['id']);
+        
+        return View::render('profile',['profile' => $profile, 'getProfile' => $getProfile, 'tweets' => $tweets]);
 
+    }
+
+    public function signOut()
+    {
+        session_destroy();
+        unset($_COOKIE['email']);
+        unset($_COOKIE['password']);
+        Controller::redirect("/login");
     }
 }

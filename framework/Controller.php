@@ -23,4 +23,11 @@ abstract class Controller
     {
         // code
     }
+
+    protected function redirect(string $link): void
+    {
+        header("Location: " . $link);
+        die();
+    }
+
 }

@@ -9,7 +9,7 @@ class Tweets extends Model
 {
     public static function getAllFromUser(int $user_id): array
     {
-        $stmt = static::db()->prepare('SELECT * FROM tweets WHERE user_id = :user_id');
+        $stmt = static::db()->prepare('SELECT *, (SELECT avatar FROM users WHERE id = :user_id) as avatar FROM tweets WHERE user_id = :user_id ORDER BY id DESC');
         $stmt->execute([':user_id' => $user_id]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

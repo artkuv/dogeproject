@@ -30,6 +30,14 @@ class User extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public static function getById(int $id): array
+    {
+        $stmt = static::db()->prepare('SELECT * FROM users WHERE id = :id');
+        $stmt->execute([':id' => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public static function getNameByEmail(string $email): string
     {
         $stmt = static::db()->prepare('SELECT name FROM users WHERE email = :email');
@@ -42,6 +50,14 @@ class User extends Model
     {
         $stmt = static::db()->prepare('SELECT id FROM users WHERE email = :email');
         $stmt->execute([':email' => $email]);
+
+        return $stmt->fetchColumn();
+    }
+
+    public static function getAvatarById(int $id): string
+    {
+        $stmt = static::db()->prepare('SELECT avatar FROM users WHERE id = :id');
+        $stmt->execute([':id' => $id]);
 
         return $stmt->fetchColumn();
     }
@@ -64,8 +80,8 @@ class User extends Model
 
     public static function create(array $params): bool
     {
-        $sql = 'INSERT INTO users (email, name, password, registered, last_login)
-                VALUES (:email, :name, :password, :registered, :last_login)';
+        $sql = 'INSERT INTO users (email, name, password, ip, registered, last_login)
+                VALUES (:email, :name, :password, :ip, :registered, :last_login)';
 
         $stmt = static::db()->prepare($sql);
 
@@ -73,6 +89,7 @@ class User extends Model
             ':email' => $params['email'],
             ':name' => $params['name'],
             ':password' => self::hashPassword($params['password']),
+            ':ip' => ip2long($_SERVER['REMOTE_ADDR']),
             ':registered' => time(),
             ':last_login' => time(),
         ]);
@@ -111,5 +128,55 @@ class User extends Model
             return false;
         }
         return false;
+    }
+
+    public static function changeAvatar(string $link, int $id): bool
+    {
+        $stmt = static::db()->prepare('UPDATE users SET avatar = :link WHERE id = :id');
+
+        return $stmt->execute([
+            ':link' => $link,
+            ':id' => $id
+        ]);
+    }
+
+    public static function changeName(string $name, int $id): bool
+    {
+        $stmt = static::db()->prepare('UPDATE users SET name = :name WHERE id = :id');
+
+        return $stmt->execute([
+            ':name' => $name,
+            ':id' => $id
+        ]);
+    }
+
+    public static function changeEmail(string $email, int $id): bool
+    {
+        $stmt = static::db()->prepare('UPDATE users SET email = :email WHERE id = :id');
+
+        return $stmt->execute([
+            ':email' => $email,
+            ':id' => $id
+        ]);
+    }
+
+    public static function changeAbout(string $about, int $id): bool
+    {
+        $stmt = static::db()->prepare('UPDATE users SET about = :about WHERE id = :id');
+
+        return $stmt->execute([
+            ':about' => $about,
+            ':id' => $id
+        ]);
+    }
+
+    public static function changePassword(string $password, int $id): bool
+    {
+        $stmt = static::db()->prepare('UPDATE users SET password = :password WHERE id = :id');
+
+        return $stmt->execute([
+            ':password' => self::hashPassword($password),
+            ':id' => $id
+        ]);
     }
 }

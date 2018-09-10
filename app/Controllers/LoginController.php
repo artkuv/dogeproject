@@ -10,13 +10,13 @@ use App\Models\User;
 /**
  *
  */
-class LoginController
+class LoginController extends Controller
 {
 
-    public function __construct()
+    public function before()
     {
         if (User::isAuth() === true) {
-            header("Location: /profile/" . $_SESSION['name']);
+            Controller::redirect("/profile/" . $_SESSION['name']);
             die();
         }
     }
@@ -51,7 +51,7 @@ class LoginController
                         setcookie('password', User::hashPassword($password), time() + 3600*24*30);
                     }
                     
-                    header("Location: /profile/" . $name);
+                    Controller::redirect("/profile/" . $name);
 
                 } else {
 
@@ -62,4 +62,5 @@ class LoginController
 
         return View::render('login', ['error' => $error, 'email' => $email]);
     }
+
 }

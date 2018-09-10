@@ -12,3 +12,5 @@ define('DB_PASS', 'my_twitter');
 define('APP_DOMAIN', 'localhost:8000');
 
 define('PASS_SALT', 'SomeSalt');
+
+define('AVATAR_DIR', '/assets/images/avatars/');
