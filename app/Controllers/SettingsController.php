@@ -10,7 +10,7 @@ use App\Models\Tweets;
 /**
  *
  */
-class SettingsController
+class SettingsController extends Controller
 {
      public function before()
     {

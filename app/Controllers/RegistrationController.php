@@ -8,7 +8,7 @@ use App\Models\User;
 /**
  *
  */
-class RegistrationController
+class RegistrationController extends Controller
 {
     public function registration()
     {

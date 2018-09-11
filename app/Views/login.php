@@ -32,7 +32,6 @@ require_once 'requires/header.php';
 		<div class="form-group">
 			<label class="form-label">
 				Password
-				<a href="/forgot-password" class="float-right small">I forgot password</a>
 			</label>
 			<input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
 		</div>
