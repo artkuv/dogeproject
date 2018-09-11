@@ -17,7 +17,6 @@ class LoginController extends Controller
     {
         if (User::isAuth() === true) {
             Controller::redirect("/profile/" . $_SESSION['name']);
-            die();
         }
     }
 

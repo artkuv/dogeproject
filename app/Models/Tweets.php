@@ -9,7 +9,7 @@ class Tweets extends Model
 {
     public static function getAll(): array
     {
-        $stmt = static::db()->query('SELECT *, 
+        $stmt = static::db()->query('SELECT *,
             (SELECT avatar FROM users WHERE id = tweets.user_id) as avatar,
             (SELECT name FROM users WHERE id = tweets.user_id) as name
             FROM tweets ORDER BY id DESC');
@@ -19,10 +19,10 @@ class Tweets extends Model
 
     public static function getFollowsTweets(int $user_id): array
     {
-        $stmt = static::db()->prepare('SELECT *, 
+        $stmt = static::db()->prepare('SELECT *,
                 (SELECT avatar FROM users WHERE id = tweets.user_id) as avatar,
                 (SELECT name FROM users WHERE id = tweets.user_id) as name
-            FROM tweets 
+            FROM tweets
             WHERE tweets.user_id IN (SELECT follows_user_id FROM followers WHERE user_id=:user_id) OR tweets.user_id = :user_id
             ORDER BY id DESC');
         $stmt->execute([':user_id' => $user_id]);

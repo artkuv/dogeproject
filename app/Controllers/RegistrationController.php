@@ -2,9 +2,8 @@
 
 namespace App\Controllers;
 
+use Framework\Controller;
 use Framework\View;
-
-
 use App\Models\User;
 /**
  *
@@ -44,8 +43,7 @@ class RegistrationController
             if (count($error) === 0) {
                 $params = array('email' => $email, 'password' => $password, 'name' => $name);
                 User::create($params); //add new user in base
-                header("Location: /login");
-                die();
+                Controller::redirect("/login");
             }
 
         return View::render('register', ['error' => $error, 'name' => $name, 'email' => $email]);
