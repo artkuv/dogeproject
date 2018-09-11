@@ -24,7 +24,7 @@ class FeedController extends Controller
         $profile = User::getById($_SESSION['id']);
         $tweets = Tweets::getAll();
 
-        return View::render('Feed', ['profile' => $profile, 'tweets' => $tweets]);
+        return View::render('feed', ['profile' => $profile, 'tweets' => $tweets]);
     }
 
     public function feed()
