@@ -84,6 +84,6 @@ class SettingsController extends Controller
 
             }
         }
-        return View::render('settings',['profile' => $profile, 'error' => $error, 'succes' => $succes]);
+        return View::render('settings', ['profile' => $profile, 'error' => $error, 'succes' => $succes]);
     }
 }
